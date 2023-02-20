@@ -10,7 +10,7 @@ process {
     #Enumerate json files
 
     #Valid JSON
-    $repoRootFolder = Split-Path -Path $PSScriptRoot -Parent
+    $repoRootFolder = Split-Path -Path $PSScriptRoot -Parent | Split-Path -Parent
     $testConfigPath = Join-Path -Path $repoRootFolder -ChildPath 'config' -AdditionalChildPath $Environment, 'test.json'
     $testConfig = Get-Content -Path $testConfigPath -Raw
     $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
