@@ -16,12 +16,15 @@ process {
     $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
     $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
+    Write-Host "testConfigPath: $testConfigPath"
+    Write-Host "testConfigSchemaFilePath: $testConfigSchemaFilePath"
+
     try {
         #Validate against schema
         $null = Test-Json -Json $testConfig -Schema $testConfigSchema -ErrorAction Stop
     }
     catch {
-        $validationErrors.Add("Provided JSON does not pass schema is not valid. Details: $_")
+        $validationErrors.Add("Provided JSON does not pass schema. Details: $_")
     }
 
 
