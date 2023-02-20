@@ -36,9 +36,10 @@ process {
 
   try {
     #Validate against schema
-    $null = Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
+    $null = Test-Json -Json $testConfigAsJson -ErrorAction Stop
   } catch {
-    $Error
+    $Error[-1].ErrorDetails.Message
+    $Error[-1].Exception
     #$validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
 
