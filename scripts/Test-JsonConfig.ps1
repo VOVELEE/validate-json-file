@@ -16,8 +16,7 @@ process {
   $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
   $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
-  $PSVersionTable
-  Write-Host -Object $testConfigSchema
+  $testConfigAsJson | ConvertFrom-Json
 
   try {
     #Validate against schema
