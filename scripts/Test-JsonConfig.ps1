@@ -13,7 +13,7 @@ process {
     $repoRootFolder = Split-Path -Path $PSScriptRoot -Parent
     $testConfigPath = Join-Path -Path $repoRootFolder -ChildPath 'config' -AdditionalChildPath $Environment, 'test.json'
     $testConfig = Get-Content -Path $testConfigPath -Raw
-    $testConfigSchemaFilePath = Join-Path -Path $PSScriptRoot -ChildPath 'jobConfig.schema.json'
+    $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
     $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
     try {
