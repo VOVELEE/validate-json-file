@@ -17,8 +17,8 @@ process {
   $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
   Write-Host "---------"
-  $a = $testConfigAsJson | ConvertFrom-Json
-  $a.Count
+
+  Invoke-Expression -Command "jq '.' $testConfigPath"
 
   Write-Host "---------"
   try {
@@ -27,7 +27,6 @@ process {
   } catch {
     $validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
-
 
   $testConfig = $testConfigAsJson | ConvertFrom-Json -ErrorAction Stop
   $testNumber = 0
