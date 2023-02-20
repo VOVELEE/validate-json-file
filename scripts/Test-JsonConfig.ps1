@@ -19,7 +19,7 @@ process {
     Write-Host "repoRootFolder: $repoRootFolder"
     Write-Host "testConfigPath: $testConfigPath"
     Write-Host "testConfigSchemaFilePath: $testConfigSchemaFilePath"
-    Get-ChildItem -Path $repoRootFolder
+    Get-ChildItem -Path $repoRootFolder | Select FullName
 
     try {
         #Validate against schema
