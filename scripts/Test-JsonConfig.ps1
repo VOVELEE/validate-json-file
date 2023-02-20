@@ -12,29 +12,29 @@ process {
   #Valid JSON
   $repoRootFolder = Split-Path -Path $PSScriptRoot -Parent
   $testConfigPath = Join-Path -Path $repoRootFolder -ChildPath 'config' -AdditionalChildPath $Environment, 'test.json'
-  $testConfig = Get-Content -Path $testConfigPath -Raw
+  $testConfigAsJson = Get-Content -Path $testConfigPath -Raw
   $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
   $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
-  Write-Host -Object $PSVersionTable
+  $PSVersionTable
   Write-Host -Object $testConfigSchema
 
   try {
     #Validate against schema
-    $null = Test-Json -Json $testConfig -Schema $testConfigSchema -ErrorAction Stop
+    $null = Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
   } catch {
     $validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
 
 
-  $testConfig = $testConfig | ConvertTo-Json -ErrorAction Stop
+  $testConfig = $testConfigAsJson | ConvertFrom-Json -ErrorAction Stop
   $testNumber = 0
   foreach ($test in $testConfig) {
-    if ($test.name -in @('import-csv', 'load-from-baselayer')) {
+    if ($test.name -in @('schedule', 'loader')) {
       $schedule = $test.schedule
 
       if ($null -eq $schedule) {
-        $validationErrors.Add("Provided JSON does not pass schema is not valid. Details: Schedule parameter is missing #/[$testNumber]")
+        $validationErrors.Add("Provided JSON does not pass schema. Details: Schedule parameter is missing in #/[$testNumber]")
       }
     }
 
