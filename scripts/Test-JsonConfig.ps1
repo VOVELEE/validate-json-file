@@ -18,7 +18,8 @@ process {
 
   Write-Host "---------"
 
-  Invoke-Expression -Command "jq '.' $testConfigPath"
+  Invoke-Expression -Command "jq '.' $testConfigPath" -ErrorAction Stop
+  Write-Host $LASTEXITCODE
 
   Write-Host "---------"
   try {
