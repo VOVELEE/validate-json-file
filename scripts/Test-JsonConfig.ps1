@@ -16,8 +16,10 @@ process {
     $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
     $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
+    Write-Host "repoRootFolder: $repoRootFolder"
     Write-Host "testConfigPath: $testConfigPath"
     Write-Host "testConfigSchemaFilePath: $testConfigSchemaFilePath"
+    Get-ChildItem -Path $repoRootFolder
 
     try {
         #Validate against schema
