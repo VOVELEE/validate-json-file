@@ -38,4 +38,8 @@ process {
 
         $testNumber++
     }
+
+    if ($validationErrors.Count) {
+        Write-Error -Message "Validation errors found. Errors: $($validationErrors -join ', ')" -ErrorAction Stop
+    }
 }
