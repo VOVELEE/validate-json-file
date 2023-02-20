@@ -16,8 +16,11 @@ process {
   $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
   $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
-  $testConfigAsJson | ConvertFrom-Json
+  Write-Host "---------"
+  $a = $testConfigAsJson | ConvertFrom-Json
+  $a.Count
 
+  Write-Host "---------"
   try {
     #Validate against schema
     $null = Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
