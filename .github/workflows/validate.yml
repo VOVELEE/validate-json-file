@@ -15,4 +15,4 @@ jobs:
 
       - name: Validate JSON file
         shell: pwsh
-        
+        run: .\scripts\Test-JsonConfig.ps1 -Environment 'dev'
