@@ -39,7 +39,7 @@ process {
     $null = Test-Json -Json $testConfigAsJson -ErrorAction Stop
   } catch {
     $Error[-1].ErrorDetails.Message
-    $Error[-1].Exception
+    $Error[-1].Exception.InnerException
     #$validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
 
