@@ -1,5 +1,8 @@
 [
     {
         "name": "blah"
+    },
+    {
+        "wrong": "blah"
     }
 ]
