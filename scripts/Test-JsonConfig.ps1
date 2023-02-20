@@ -16,17 +16,30 @@ process {
   $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
   $testConfigSchema = Get-Content -Path $testConfigSchemaFilePath -Raw
 
-  Write-Host "---------"
+  #Validate is valid json file
+  try {
+    if ($IsLinux) {
+      $r = Invoke-Expression -Command "jq '.' $testConfigPath" -ErrorAction Stop
+      if ($LASTEXITCODE -ne 0) {
+        Write-Error -Message $r -ErrorAction Stop
+      }
+    }
 
-  Invoke-Expression -Command "jq '.' $testConfigPath" -ErrorAction Stop
-  Write-Host $LASTEXITCODE
+    if ($IsWindows) {
+      Test-Json -Json $testConfigAsJson
+    }
+  } catch {
+    $validationErrors.Add("Provided file is not valid JSON. Details: $_")
+  }
 
-  Write-Host "---------"
+  #Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
+
   try {
     #Validate against schema
     $null = Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
   } catch {
-    $validationErrors.Add("Provided JSON does not pass schema. Details: $_")
+    $Error
+    #$validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
 
   $testConfig = $testConfigAsJson | ConvertFrom-Json -ErrorAction Stop
