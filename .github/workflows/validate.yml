@@ -1,18 +1,20 @@
 name: Validate JSON file
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
   pull_request:
+    branches: [ 'main' ]
+    paths:
+      - 'config/**'
 
 jobs:
-  build:
+  validate-json-config:
+    strategy:
+      matrix:
+        environment: ['dev', 'test']
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-
-      - name: Validate JSON file
-        shell: pwsh
-        run: .\scripts\Test-JsonConfig.ps1 -Environment 'dev'
+      - name: Validate JSON file action
+        uses: VOVELEE/validate-json-action/validate-json@main
+        with:
+          environment: ${{ matrix.environment }}
