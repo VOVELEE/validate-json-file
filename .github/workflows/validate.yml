@@ -14,6 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate JSON file action
-        uses: VOVELEE/validate-json/validate-json-action@main
+        uses: VOVELEE/validate-json-action/validate-json@main
         with:
           environment: ${{ matrix.environment }}
