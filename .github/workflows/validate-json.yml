@@ -27,7 +27,8 @@ jobs:
           #Enumerate json files
 
           #Valid JSON
-          $repoRootFolder = Split-Path -Path $PSScriptRoot -Parent
+          #$repoRootFolder = Split-Path -Path $env:GITHUB_WORKSPACE -Parent
+          $repoRootFolder = $env:GITHUB_WORKSPACE
           $testConfigPath = Join-Path -Path $repoRootFolder -ChildPath 'config' -AdditionalChildPath $Environment, 'test.json'
           $testConfigAsJson = Get-Content -Path $testConfigPath -Raw
           $testConfigSchemaFilePath = Join-Path -Path $repoRootFolder -ChildPath 'schemas' -AdditionalChildPath 'test.schema.json'
