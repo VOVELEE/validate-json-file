@@ -8,10 +8,17 @@ on:
 
 jobs:
   validate-dev:
-    uses: VOVELEE/validate-json-file/.github/workflows/validate-json.yml@validate
-    with:
-      environment: dev
-  validate-test:
-    uses: VOVELEE/validate-json-file/.github/workflows/validate-json.yml@validate
-    with:
-      environment: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate JSON file action
+        uses: VOVELEE/validate-json-action@main
+        with:
+          environment: dev
+  # validate-dev:
+  #   uses: VOVELEE/validate-json-file/.github/workflows/validate-json.yml@validate
+  #   with:
+  #     environment: dev
+  # validate-test:
+  #   uses: VOVELEE/validate-json-file/.github/workflows/validate-json.yml@validate
+  #   with:
+  #     environment: test
