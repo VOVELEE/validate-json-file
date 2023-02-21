@@ -26,23 +26,20 @@ process {
     }
 
     if ($IsWindows) {
-      Test-Json -Json $testConfigAsJson
+      $null = $testConfigAsJson | ConvertFrom-Json -Depth 100 -ErrorAction Stop
     }
   } catch {
     $validationErrors.Add("Provided file is not valid JSON. Details: $_")
   }
 
-  #Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
-
   try {
     #Validate against schema
-    $null = Test-Json -Json $testConfigAsJson -ErrorAction Stop
+    $null = Test-Json -Json $testConfigAsJson -Schema $testConfigSchema -ErrorAction Stop
   } catch {
-    $Error[-1].ErrorDetails.Message
-    $Error[-1].Exception.InnerException
-    #$validationErrors.Add("Provided JSON does not pass schema. Details: $_")
+    $validationErrors.Add("Provided JSON does not pass schema. Details: $_")
   }
 
+  #Additional validations
   $testConfig = $testConfigAsJson | ConvertFrom-Json -ErrorAction Stop
   $testNumber = 0
   foreach ($test in $testConfig) {

@@ -1,0 +1,20 @@
+name: Validate JSON file
+
+on:
+  workflow_dispatch:
+
+inputs:
+  environment:
+    required: true
+    type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Validate JSON file
+        shell: pwsh
+        run: .\scripts\Test-JsonConfig.ps1 -Environment '${{ inputs.environment }}'
