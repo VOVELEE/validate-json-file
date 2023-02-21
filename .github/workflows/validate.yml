@@ -7,6 +7,7 @@ on:
     paths:
       - 'config/**'
 
+#This should not trigger anything
 jobs:
   validate-json-config:
     strategy:

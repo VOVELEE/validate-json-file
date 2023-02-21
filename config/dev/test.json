@@ -3,6 +3,7 @@
     "name": "schedules"
   },
   {
-    "name": "blah"
+    "name": "blah",
+    "aaa": 1
   }
 ]
